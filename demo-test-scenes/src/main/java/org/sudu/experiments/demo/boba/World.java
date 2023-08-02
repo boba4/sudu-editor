@@ -14,6 +14,7 @@ public class World {
   public static final float mobSpeed = 500;
   public static final float mobWorldExtend = 0;
   public static final float playerSpeed = 175;
+  public static final float playerBulletLifeTime = 3.5f;
 
   public final V2f size = new V2f();
   final MovingRectangle player = new MovingRectangle();
@@ -47,7 +48,7 @@ public class World {
 
   void fireFromPlayer() {
     Bullet bullet = new Bullet(this,
-        player.position, new V2f(0, -100));
+        player.position, new V2f(0, -100), playerBulletLifeTime);
     bullets.add(bullet);
   }
   public void paint(SceneApi api) {

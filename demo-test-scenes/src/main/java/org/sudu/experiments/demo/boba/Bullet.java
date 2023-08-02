@@ -4,9 +4,11 @@ import org.sudu.experiments.math.V2f;
 
 public class Bullet extends MovingRectangle {
   private final World world;
+  float lifeTime;
 
-  public Bullet(World world, V2f position, V2f speed) {
+  public Bullet(World world, V2f position, V2f speed, float lifeTime) {
     this.world = world;
+    this.lifeTime = lifeTime;
     int size1 = world.bulletSize;
     this.size.set(size1, size1);
     this.position.set(position);
@@ -16,7 +18,8 @@ public class Bullet extends MovingRectangle {
   @Override
   boolean update(float dT) {
     super.update(dT);
-    boolean isAlive = true;
+    lifeTime -= dT;
+    boolean isAlive = lifeTime > 0;
     V2f playerPosition = world.player.position;
     V2f playerSize = world.player.size;
     return isAlive;
