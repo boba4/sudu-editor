@@ -80,6 +80,7 @@ public class VovaGame extends Scene0 implements MouseListener {
       switch (event.keyCode) {
         case KeyCode.C -> System.out.println("C");
         case KeyCode.V -> System.out.println("V");
+        case KeyCode.SPACE -> world.fireFromPlayer();
       }
     }
     return false;

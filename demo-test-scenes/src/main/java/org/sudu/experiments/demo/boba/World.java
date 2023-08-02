@@ -6,14 +6,20 @@ import org.sudu.experiments.math.V2f;
 import org.sudu.experiments.math.V2i;
 import org.sudu.experiments.math.XorShiftRandom;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
+@SuppressWarnings("ForLoopReplaceableByForEach")
 public class World {
-  public static final float mobSpeed = 300;
-  public static final float mobWorldExtend = -20;
+  public static final float mobSpeed = 500;
+  public static final float mobWorldExtend = 0;
   public static final float playerSpeed = 175;
 
   public final V2f size = new V2f();
   final MovingRectangle player = new MovingRectangle();
   final MovingRectangle[] mobs = new MovingRectangle[5];
+  final ArrayList<Bullet> bullets = new ArrayList<>();
+  int bulletSize;
 
   public World() {
     for (int i = 0; i < mobs.length; i++) {
@@ -39,11 +45,18 @@ public class World {
         player.color);
   }
 
-
+  void fireFromPlayer() {
+    Bullet bullet = new Bullet(this,
+        player.position, new V2f(0, -100));
+    bullets.add(bullet);
+  }
   public void paint(SceneApi api) {
     player.draw(api.graphics);
     for (MovingRectangle mob : mobs) {
       mob.draw(api.graphics);
+    }
+    for (int i = 0; i < bullets.size(); i++) {
+      bullets.get(i).draw(api.graphics);
     }
   }
 
@@ -52,15 +65,22 @@ public class World {
     for (MovingRectangle mob : mobs) {
       changed = mob.update(dT) || changed;
     }
+    for (Iterator<Bullet> iterator = bullets.iterator(); iterator.hasNext(); ) {
+      Bullet bullet = iterator.next();
+      boolean isAlive = bullet.update(dT);
+      if (!isAlive) iterator.remove();
+    }
     return changed;
   }
   public void onResize(V2i size) {
     this.size.set(size.x, size.y);
     int minSize = Math.min(size.x, size.y);
-    int rectSize = minSize / 20;
-    player.size.set(rectSize, rectSize);
+    int playerSize = minSize / 20;
+    int mobSize = minSize / 20;
+    bulletSize = Math.max(minSize / 60, 1);
+    player.size.set(playerSize, playerSize);
     for (MovingRectangle mob : mobs) {
-      mob.size.set(rectSize, rectSize);
+      mob.size.set(mobSize, mobSize);
     }
   }
 }
