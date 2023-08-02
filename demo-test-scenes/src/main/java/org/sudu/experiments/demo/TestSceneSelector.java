@@ -3,6 +3,7 @@ package org.sudu.experiments.demo;
 import org.sudu.experiments.Debug;
 import org.sudu.experiments.Scene;
 import org.sudu.experiments.SceneApi;
+import org.sudu.experiments.demo.boba.VovaGame;
 import org.sudu.experiments.demo.menu.FindUsagesDemo;
 import org.sudu.experiments.demo.menu.ToolbarDemo;
 import org.sudu.experiments.demo.worker.WorkerTest;
@@ -16,6 +17,7 @@ public class TestSceneSelector {
     }
     return switch (name) {
       default -> DemoEdit1::new;
+      case "VovaGame" -> VovaGame::new;
       case "DemoEdit0" -> DemoEdit0::new;
       case "DemoScene1", "test" -> DemoScene1::new;
       case "ToolbarDemo" -> ToolbarDemo::new;
