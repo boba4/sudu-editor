@@ -3,10 +3,7 @@ package org.sudu.experiments.demo.boba;
 
 import org.sudu.experiments.Scene0;
 import org.sudu.experiments.SceneApi;
-import org.sudu.experiments.input.KeyCode;
-import org.sudu.experiments.input.KeyEvent;
-import org.sudu.experiments.input.MouseEvent;
-import org.sudu.experiments.input.MouseListener;
+import org.sudu.experiments.input.*;
 import org.sudu.experiments.math.Color;
 import org.sudu.experiments.math.V2i;
 import org.sudu.experiments.math.V4f;
@@ -24,7 +21,9 @@ public class VovaGame extends Scene0 implements MouseListener {
   public VovaGame(SceneApi api) {
     super(api);
     api.input.onMouse.add(this);
-    api.input.onKeyPress.add(this::onKey);
+    InputListeners.KeyHandler handler = this::onKey;
+    api.input.onKeyPress.add(handler);
+    api.input.onKeyRelease.add(handler);
     api.window.timeNow();
   }
 
