@@ -1,6 +1,7 @@
 package org.sudu.experiments;
 
 import org.sudu.experiments.fonts.FontDesk;
+import org.sudu.experiments.math.V2f;
 import org.sudu.experiments.math.V2i;
 import org.sudu.experiments.math.V4f;
 
@@ -136,6 +137,12 @@ public abstract class WglGraphics {
   }
 
   public void drawRect(int x, int y, V2i size, V4f color) {
+    setShader(shConstColor);
+    shConstColor.setPosition(gl, x, y, size, clientRect);
+    shConstColor.setColor(gl, color);
+    attributeMask = rectangle.draw(attributeMask);
+  }
+  public void drawRect(float x, float y, V2f size, V4f color) {
     setShader(shConstColor);
     shConstColor.setPosition(gl, x, y, size, clientRect);
     shConstColor.setColor(gl, color);

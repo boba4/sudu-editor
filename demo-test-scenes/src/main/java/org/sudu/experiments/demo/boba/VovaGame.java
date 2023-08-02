@@ -3,15 +3,15 @@ package org.sudu.experiments.demo.boba;
 
 import org.sudu.experiments.Scene0;
 import org.sudu.experiments.SceneApi;
-import org.sudu.experiments.input.InputListener;
 import org.sudu.experiments.input.KeyCode;
 import org.sudu.experiments.input.KeyEvent;
 import org.sudu.experiments.input.MouseEvent;
+import org.sudu.experiments.input.MouseListener;
 import org.sudu.experiments.math.Color;
 import org.sudu.experiments.math.V2i;
 import org.sudu.experiments.math.V4f;
 
-public class VovaGame extends Scene0 implements InputListener {
+public class VovaGame extends Scene0 implements MouseListener {
 
   final World world = new World();
 
@@ -23,7 +23,8 @@ public class VovaGame extends Scene0 implements InputListener {
 
   public VovaGame(SceneApi api) {
     super(api);
-    api.input.addListener(this);
+    api.input.onMouse.add(this);
+    api.input.onKeyPress.add(this::onKey);
     api.window.timeNow();
   }
 
@@ -61,7 +62,7 @@ public class VovaGame extends Scene0 implements InputListener {
 //  }
 
   @Override
-  public void onResize(V2i newSize, double dpr) {
+  public void onResize(V2i newSize, float dpr) {
     if (this.dpr == 0) {
       world.initScene(newSize);
     }
@@ -70,7 +71,6 @@ public class VovaGame extends Scene0 implements InputListener {
   }
 
 
-  @Override
   public boolean onKey(KeyEvent event) {
     if (event.keyCode == KeyCode.ARROW_LEFT) left = event.isPressed;
     if (event.keyCode == KeyCode.ARROW_RIGHT) right = event.isPressed;
