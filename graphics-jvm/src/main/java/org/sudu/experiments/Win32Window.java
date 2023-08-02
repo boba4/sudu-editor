@@ -107,7 +107,7 @@ public class Win32Window implements WindowPeer, Window {
       return false;
     }
     angleSurfaceSize.set(angleSize);
-    setVSync(false);
+    //setVSync(false);
 
     if (mainWindow == null) {
       time.printTime("window, angle and graphics started: ");
